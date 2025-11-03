@@ -42,9 +42,9 @@ app.use(express.json({ limit: "4mb" }))
 app.use(cors())
 
 // api routes setup 
-app.use('/', (req, res) => {
-    res.send('server is live')
-})
+// app.use('/', (req, res) => {
+//     res.send('server is live')
+// })
 app.use('/api/auth', userRouter)
 app.use('/api/messages', messageRouter)
 

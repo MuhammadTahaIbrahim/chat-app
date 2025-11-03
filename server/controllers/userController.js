@@ -4,9 +4,12 @@ import { generateToken } from "../lib/utils.js"
 import cloudinary from "../lib/cloudinary.js"
 
 export const signup = async (req, res) => {
+
     const { fullName, email, password, bio } = req.body
 
     try {
+        console.log("Received signup data:", req.body)
+
         if (!fullName || !email || !password || !bio) {
             return res.json({ success: false, message: "Missing Details" })
         }
@@ -40,7 +43,7 @@ export const login = async (req, res) => {
         if (!email || !password) {
             return res.json({ success: false, message: "Email and Password are required" })
         }
-        const userData = await userModel.findOne({ email })
+        const userData = await User.findOne({ email })
         if (!userData) {
             return res.json({ success: false, message: "Invalid Email" })
         }

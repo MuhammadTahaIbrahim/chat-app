@@ -32,7 +32,8 @@ export const AuthProvider = ({ children }) => {
     // login fucntin to handle user authentication and socket connection
     const login = async (state, credentials) => {
         try {
-            const { data } = axios.post(`/api/auth/${state}`, credentials)
+            console.log("Sending signup request", credentials)
+            const { data } = await axios.post(`/api/auth/${state}`, credentials)
             if (data.success) {
                 setAuthUser(data.userData)
                 connectSocket(data.userData)
@@ -42,8 +43,10 @@ export const AuthProvider = ({ children }) => {
                 toast.success(data.message)
             } else {
                 toast.error(data.message)
+                console.log(data.message)
             }
         } catch (error) {
+            console.log(error.message)
             toast.error(error.message)
         }
     }
@@ -62,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     // update profile fucntion to handle user profile updaates
     const updateProfile = async (body) => {
         try {
-            const { data } = axios.put('/api/auth/update-profile', body)
+            const { data } = await axios.put('/api/auth/update-profile', body)
             if (data.success) {
                 setAuthUser(data.user)
                 toast.success("Profile Updated successfully")
