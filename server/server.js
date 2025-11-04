@@ -8,7 +8,6 @@ import messageRouter from './routes/messageRoutes.js'
 import { Server } from 'socket.io'
 
 // app config
-const PORT = process.env.PORT || 5000
 const app = express()
 const server = http.createServer(app)
 
@@ -51,5 +50,10 @@ app.use('/api/messages', messageRouter)
 //connect to mongodb
 await connectDB()
 
-server.listen(PORT, () => console.log("server running at " + PORT))
+if (process.env.NODE_ENV !== "production") {
+    const PORT = process.env.PORT || 5000
+    server.listen(PORT, () => console.log("server running at " + PORT))
+}
 
+// export server for vercel
+export default server
